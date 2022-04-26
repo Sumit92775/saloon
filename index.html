@@ -395,6 +395,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<!-- Modernizr -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <!-- Toastify -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	
 	<!-- Google Analytics Code Goes Here-->
 
@@ -403,9 +406,9 @@
 		<div id="cspio-content" class="animated fadeIn" style="display: block;">
 			
 					    				
-			<h1 id="cspio-headline">SaloonPlus is Coming Soon</h1>			    				
+			<h1 id="cspio-headline">صالون بلس قريباً</h1>			    				
 			
-			<div id="cspio-description">Get ready! Something really cool is coming!</div>			    				
+			<!-- <div id="cspio-description">Get ready! Something really cool is coming!</div>		    				 -->
 			<div id="cspio-description fs-5">مرحبا بك
 				عميلنا العزيز نرحب بكم معنا في صالون بلس، المنصة العربية الرائدة التي ستقدم وتنظم الحجوزات الخاصة بخدمات التجميل والحلاقة والعناية بالجسم بكل سلاسة وتميز عبر الموقع والتطبيق. إذا كنت صاحب\ة عمل "كيان مؤسسي بسجل تجاري" أو عامل\ة مستقل "بوثيقة عمل حر" تسعى لتقديم أفضل تجربة لعملائك باحتراف فأنت في المكان المناسب. نتطلع لتقديم خدمة مميزة تتفهم وتنفرد بانسيابيه عملك اليومي. سجل معلوماتك معنا ليصلك تحديثات منصتنا لتكن من القلة الأوائل على قائمتنا حال انطلاقنا. 
 				ولا ننسى عملائنا الكرام الذين يولون أهمية قصوى للوقت، في ظل جداولهم اليومية المزدحمة.
@@ -415,17 +418,17 @@
 				<form id="form" onsubmit="formSubmit()">
 					<div id="grid-container">
 						<div class="grid-item-container-a mx-1">
-							<label>Category </label>
+							<label>الفئة </label>
 							<select id="category" aria-placeholder="Choose Category" onchange="categorySelect(event)">
-								<option value="customer">Customer</option>
-								<option value="store">Service Provider</option>
-								<option value="freelancer">Freelancer</option>
+								<option value="customer">عميل</option>
+								<option value="store">مقدم خدمة</option>
+								<option value="freelancer">عامل حر</option>
 							  </select>
 						</div>
 						
 						<div class="grid-item-container-a mx-1">
-							<label id="label-name">Name <span class="required">*</span></label>
-							<input type="text" name="name" placeholder="name" required></input>
+							<label id="label-name">الإسم <span class="required">*</span></label>
+							<input type="text" name="name" placeholder="الإسم " required></input>
 						</div>
 						
 						<!-- <div class="grid-item-container-a mx-1">
@@ -437,18 +440,18 @@
 					<div id="grid-container">
 						<!-- <div class="grid-item-container"> -->
 							<div class="grid-item-container-b mx-1">
-								<label>Mobile No <span class="required">*</span></label>
-								<input name="mobileNumber" required type="number" placeholder="mobile number"></input>
+								<label>رقم الجوال <span class="required">*</span></label>
+								<input name="mobileNumber" required type="number" placeholder="رقم الجوال"></input>
 							</div>
 
 							<div class="grid-item-container-b mx-1">
-								<label>District <span class="required">*</span></label>
-								<input name="district" required type="text"placeholder="district"></input>
+								<label>الحي <span class="required">*</span></label>
+								<input name="district" required type="text" placeholder="الحي"></input>
 							</div>
 							
 							<div class="grid-item-container- mx-1">
-								<label>City <span class="required">*</span></label>
-								<input name="city" required type="text"placeholder="city"></input>
+								<label>المدينة <span class="required">*</span></label>
+								<input name="city" required type="text"placeholder="المدينة"></input>
 							</div>
 						<!-- </div> -->
 					</div>
@@ -457,12 +460,12 @@
 							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAALTAF9BYXlss-XODBVMvvAAibV2-" data-callback="get_action()"></div>
 							<br/>
                             <span id="captcha"></span>
-							<input type="submit" value="Submit">
+                            <div class="btn-container">
+                                <button type="submit" id="submit-btn" value="Submit">ارسال</button>
+                            </div>
 						</form>
 					</div>
-					<div class="btn-container">
-						<button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button>
-					</div>
+						<!-- <button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button> -->
 				</form>
 			</div>
 
@@ -567,10 +570,42 @@
 				}),
 				};
 	
-				$.ajax(settings).done(function (response) {
-					console.log(response);
+				$.ajax(settings).done(function (res) {
+                    if(res.status){
+                        Toastify({
+                            text: res.message,
+                            position: 'right',
+                            duration: 3000,
+                            style: {
+                                    background: 'green',
+                                    width: '300px'
+                                }
+                            }).showToast();
+                    } else {
+                        Toastify({
+                            text: res.message,
+                            duration: 3000,
+                            style: {
+                                    background: 'red',
+                                    width: '300px'
+                                },
+                            position: 'right'
+                            }).showToast();
+                    }
+					// console.log(response);
 				});
-			}
+			} else {
+                Toastify({
+                        text: 'Please fill the required fields',
+                        duration: 3000,
+                        style: {
+                                background: 'red',
+                                width: '300px'
+                            },
+                        position: 'right'
+                        }).showToast();
+                    }
+            }
 			// var data = {
 			// 	"email": `${mobileNumber}`,
 			// 	"descriptionData": {
@@ -604,6 +639,7 @@
 
 	</script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 	
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
