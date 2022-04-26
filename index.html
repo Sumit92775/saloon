@@ -48,6 +48,7 @@
 	html {
 		height: 100%;
 		overflow: hidden;
+        direction: rtl;
 	}
 
 	body {
@@ -418,7 +419,7 @@
 				<form id="form" onsubmit="formSubmit()">
 					<div id="grid-container">
 						<div class="grid-item-container-a mx-1">
-							<label>الفئة </label>
+							<label>الفئة <span class="required">*</span></label>
 							<select id="category" aria-placeholder="Choose Category" onchange="categorySelect(event)">
 								<option value="customer">عميل</option>
 								<option value="store">مقدم خدمة</option>
@@ -596,7 +597,7 @@
 				});
 			} else {
                 Toastify({
-                        text: 'Please fill the required fields',
+                        text: 'نرجوا تعبأة هذه الخانات',
                         duration: 3000,
                         style: {
                                 background: 'red',
