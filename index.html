@@ -82,7 +82,7 @@
 	.cspio body, .cspio body p{
         font-family: Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
         font-size: 20px;
         line-height: 1.50em;
         color:#ffffff;
@@ -91,25 +91,25 @@
 	::-webkit-input-placeholder {
 		font-family:Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
 	}
 
 	::-moz-placeholder {
 		font-family:Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
 	} 
 
 	:-ms-input-placeholder {
 		font-family:Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
 	} 
 
 	:-moz-placeholder {
 		font-family:Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
 	}
 
     .cspio h1, .cspio h2, .cspio h3, .cspio h4, .cspio h5, .cspio h6{
@@ -128,7 +128,7 @@
 	.cspio button{
         font-family: Helvetica, Arial, sans-serif;
 		font-weight: 400;
-		font-style: ;
+		/* font-style: ; */
     }
 	
     .cspio a, .cspio a:visited, .cspio a:hover, .cspio a:active{
@@ -284,10 +284,13 @@
 		position: absolute;
 		right: 2%;
 		bottom: 5%;
-		font-size: 10px;
+		font-size: 14px;
 		color: #ffffff;
 	}
 
+    #cspio-description {
+        text-align: right !important;
+    }
 	
 	@media screen and (max-width: 600px) {
 		#grid-container {
@@ -430,14 +433,26 @@
 			<h1 id="cspio-headline">صالون بلس قريباً</h1>			    				
 			
 			<!-- <div id="cspio-description">Get ready! Something really cool is coming!</div>		    				 -->
-			<div id="cspio-description fs-5">مرحبا بك
-				عميلنا العزيز نرحب بكم معنا في صالون بلس، المنصة العربية الرائدة التي ستقدم وتنظم الحجوزات الخاصة بخدمات التجميل والحلاقة والعناية بالجسم بكل سلاسة وتميز عبر الموقع والتطبيق. إذا كنت صاحب\ة عمل "كيان مؤسسي بسجل تجاري" أو عامل\ة مستقل "بوثيقة عمل حر" تسعى لتقديم أفضل تجربة لعملائك باحتراف فأنت في المكان المناسب. نتطلع لتقديم خدمة مميزة تتفهم وتنفرد بانسيابيه عملك اليومي. سجل معلوماتك معنا ليصلك تحديثات منصتنا لتكن من القلة الأوائل على قائمتنا حال انطلاقنا. 
-				ولا ننسى عملائنا الكرام الذين يولون أهمية قصوى للوقت، في ظل جداولهم اليومية المزدحمة.
-				اختر الفئة الممثلة لعلاقة شخصكم الكريم المستقبلية معنا من الخيارات أدناه لتطلِع على مستجداتنا اولاً بأول. 
-				</div>			    				
+			<div id="cspio-description">
+				مرحبا بك عميلنا العزيز نرحب بكم معنا في صالون بلس، المنصة العربية الرائدة التي ستقدم وتنظم الحجوزات الخاصة بخدمات التجميل والحلاقة والعناية بالجسم بكل سلاسة وتميز عبر الموقع والتطبيق. إذا كنت صاحب\ة عمل "كيان مؤسسي بسجل تجاري" أو عامل\ة مستقل "بوثيقة عمل حر" تسعى لتقديم أفضل تجربة لعملائك باحتراف فأنت في المكان المناسب. نتطلع لتقديم خدمة مميزة تتفهم وتنفرد بانسيابيه عملك اليومي.	
+			</div>			    				
+			
+			<div id="cspio-description">
+				سجل معلوماتك معنا ليصلك تحديثات منصتنا لتكن من القلة الأوائل على قائمتنا حال انطلاقنا.
+			</div>			    				
+			
+			<div id="cspio-description">
+				ولا ننسى عملائنا الكرام الذين يولون أهمية قصوى للوقت، في ظل جداولهم اليومية المزدحمة. اختر الفئة الممثلة لعلاقة شخصكم الكريم المستقبلية معنا من الخيارات أدناه لتطلِع على مستجداتنا اولاً بأول.
+			</div>
+
 			<div id="form-container">
 				<form id="form">
 					<div id="grid-container">
+                        <div class="grid-item-container-a mx-1">
+                            <label id="label-name">الإسم <span class="required">*</span></label>
+                            <input type="text" name="name" placeholder="الإسم " required></input>
+                        </div>
+
 						<div class="grid-item-container-a mx-1">
 							<label>الفئة <span class="required">*</span></label>
 							<select id="category" aria-placeholder="Choose Category" onchange="categorySelect(event)">
@@ -447,10 +462,6 @@
 							  </select>
 						</div>
 						
-						<div class="grid-item-container-a mx-1">
-							<label id="label-name">الإسم <span class="required">*</span></label>
-							<input type="text" name="name" placeholder="الإسم " required></input>
-						</div>
 						
 						<!-- <div class="grid-item-container-a mx-1">
 							<label>Email </label>
@@ -472,16 +483,16 @@
 							
 							<div class="grid-item-container-b mx-1">
 								<label>المدينة <span class="required">*</span></label>
-								<input name="city" required type="text"placeholder="المدينة"></input>
+								<input name="city" required type="text" placeholder="المدينة"></input>
 							</div>
 						<!-- </div> -->
 					</div>
 					<div id="captcha-container">
 						<form action="?" method="POST">
-							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAALTAF9BYXlss-XODBVMvvAAibV2-" data-callback="get_action()"></div>
+							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAALTAF9BYXlss-XODBVMvvAAibV2-" data-callback="correctCaptcha"></div>
 							<br/>
                             <span id="captcha"></span>
-                            <input type="submit" id="submit-btn" value="ارسال"></button>
+                            <input type="submit" id="submit-btn" value="ارسال"></input>
                         </form>
                     </div>
                     <div class="btn-container">
@@ -504,9 +515,9 @@
 				<span>معروف رقم 65257</span>
 			</div>
 
-			<div id="cspio-credit">	
+			<!-- <div id="cspio-credit">	
 				<span>Created with Love by Cybertrons</span>
-			</div>
+			</div> -->
 
 									    									    			    			    							    			     			    		
 		</div><!-- end of #cspio-content -->
@@ -542,8 +553,6 @@
 
 		var selectedCategoryString = 'customer'
 
-		// console.log("nameLabel: ", nameLabel);
-		/// category select
 		function categorySelect(data){
 			let selectedCategory = data.target.selectedIndex
 			switch(selectedCategory) {
@@ -552,17 +561,18 @@
 					break;
 				case 1:
 					selectedCategoryString = 'service provider'
-					document.querySelector('#label-name').innerHTML = "Owner's Name";
+					// document.querySelector('#label-name').innerHTML = "Owner's Name";
 					break;
 				case 2:
 					selectedCategoryString = 'freelancer'
-					document.querySelector('#label-name').innerHTML = "Owner's Name";
+					// document.querySelector('#label-name').innerHTML = "Owner's Name";
 					break;
+                default:
+                    selectedCategoryString = 'customer'
 			}
 		}
 
-
-		function formSubmit() {
+        function formSubmit() {
 			let name = document.querySelector('[name="name"]').value; // district input field
 			let district = document.querySelector('[name="district"]').value; // district input field
 			let city = document.querySelector('[name="city"]').value; // city input field
@@ -629,37 +639,25 @@
                         }).showToast();
                     }
             }
-			// var data = {
-			// 	"email": `${mobileNumber}`,
-			// 	"descriptionData": {
-			// 	"category": `${selectedCategoryString}`,
-			// 	"name": `${name}`,
-			// 	"district": `${district}`,
-			// 	"city": `${city}` 
-			// 	}
-			// }
 
-			// console.log("data: ", data);
-		
-		
-		
-		function get_action(form) 
-			{
-				var v = grecaptcha.getResponse();
-				if(v.length == 0)
-				{
-					document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
-					return false;
-				}
-				else
-				{
-					document.getElementById('captcha').innerHTML="Captcha completed";
-					document.getElementById('submit-btn').style.display = 'block';
-                    formSubmit();
-					return true; 
-				}
-			}
 
+        var correctCaptcha = function(form) {
+            var v = grecaptcha.getResponse();
+            if(v.length == 0)
+            {
+                document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
+                return false;
+            }
+            else
+            {
+                document.getElementById('captcha').innerHTML="Captcha completed";
+                // document.getElementById('submit-btn').style.display = 'block';
+                formSubmit();
+                return true; 
+            }
+        }
+
+		
 
 	</script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
