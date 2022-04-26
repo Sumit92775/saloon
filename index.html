@@ -300,7 +300,7 @@
 	 #form-container {
 		width: 100%;
 		height: fit-content;
-		padding: 15px 15px 0px 15px;
+		padding: 15px 15px 5px 15px;
 		background-color: #ebebeb;
 		margin-block-start: 30px;
 		border-radius: 10px;
@@ -325,6 +325,12 @@
 		display: flex;
 		flex-direction: column;
 		/* justify-content: space-between; */
+	}
+
+	#captcha-container {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
 	}
 
 	.btn-container button {
@@ -357,6 +363,12 @@
 
 	.mx-1 {
 		margin-inline-start: 5px;
+	}
+
+	span.required {
+		color: red;
+		font-size: 20px;
+		padding-inline-start: 5px;
 	}
 
 	select {
@@ -405,7 +417,7 @@
 			<div id="form-container">
 				<form id="form" onsubmit="formSubmit()">
 					<div id="grid-container">
-						<div class="grid-item-container-a">
+						<div class="grid-item-container-a mx-1">
 							<label>Category </label>
 							<select id="category" aria-placeholder="Choose Category" onchange="categorySelect(event)">
 								<option value="customer">Customer</option>
@@ -415,31 +427,43 @@
 						</div>
 						
 						<div class="grid-item-container-a mx-1">
-							<label id="label-name">Name </label>
-							<input type="text" placeholder="name" required></input>
+							<label id="label-name">Name <span class="required">*</span></label>
+							<input type="text" name="name" placeholder="name" required></input>
 						</div>
+						
+						<!-- <div class="grid-item-container-a mx-1">
+							<label>Email </label>
+							<input type="email" name="email" placeholder="email" required></input>
+						</div> -->
 
 					</div>
 					<div id="grid-container">
 						<!-- <div class="grid-item-container"> -->
 							<div class="grid-item-container-b mx-1">
-								<label>Mobile No </label>
-								<input name="mobileNumber" type="number" placeholder="mobile number"></input>
+								<label>Mobile No <span class="required">*</span></label>
+								<input name="mobileNumber" required type="number" placeholder="mobile number"></input>
 							</div>
 
 							<div class="grid-item-container-b mx-1">
-								<label>District </label>
-								<input name="district" type="text"placeholder="district"></input>
+								<label>District <span class="required">*</span></label>
+								<input name="district" required type="text"placeholder="district"></input>
 							</div>
 							
 							<div class="grid-item-container- mx-1">
-								<label>City </label>
-								<input name="city" type="text"placeholder="city"></input>
+								<label>City <span class="required">*</span></label>
+								<input name="city" required type="text"placeholder="city"></input>
 							</div>
 						<!-- </div> -->
 					</div>
+					<div id="captcha-container">
+						<form action="?" method="POST">
+							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAAOfAUBThY1kcGCibW8r8u2BGMwYy" data-callback="get_action()"></div>
+							<br/>
+							<input type="submit" value="Submit">
+						</form>
+					</div>
 					<div class="btn-container">
-						<button type="submit" value="Submit">Submit</button>
+						<button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button>
 					</div>
 				</form>
 			</div>
@@ -492,30 +516,96 @@
 		let data = document.querySelector('category')
 		console.log("data", data);
 
-		let district = document.querySelector('[name="district"]').value; // district input field
-		let city = document.querySelector('[name="city"]').value; // city input field
-		let mobileNumber = document.querySelector('[name="mobileNumber"]').value; // mobileNumber input field
-		
-		function formSubmit(data) {
-			// let category = document.querySelector('[name="category"]').value; // category input field
-			console.log("district: ", district);
-			console.log("data: ", category);
-		}
-		
+		var selectedCategoryString = 'customer'
+
 		// console.log("nameLabel: ", nameLabel);
 		/// category select
 		function categorySelect(data){
 			let selectedCategory = data.target.selectedIndex
-			if (selectedCategory === 1 || selectedCategory === 2) {
-				document.querySelector('#label-name').innerHTML = "Owner's Name";
-				console.log("true");
-			} else {
-				console.log("false");
+			switch(selectedCategory) {
+				case 0:
+					selectedCategoryString = 'customer'
+					break;
+				case 1:
+					selectedCategoryString = 'service provider'
+					document.querySelector('#label-name').innerHTML = "Owner's Name";
+					break;
+				case 2:
+					selectedCategoryString = 'freelancer'
+					document.querySelector('#label-name').innerHTML = "Owner's Name";
+					break;
 			}
+		}
+
+
+		function formSubmit(data) {
+			let name = document.querySelector('[name="name"]').value; // district input field
+			let district = document.querySelector('[name="district"]').value; // district input field
+			let city = document.querySelector('[name="city"]').value; // city input field
+			let mobileNumber = ''+document.querySelector('[name="mobileNumber"]').value; // mobileNumber input field
 			
-		} 
+			console.log("district: ", district, city, mobileNumber, name, selectedCategoryString);
+			console.log("data: ", category);
+
+			if (name.length > 0 && district.length > 0 && city.length > 0 && mobileNumber.length > 0) {
+				var settings = {
+				"url": "http://saloonplus.com:4000/api_v1/admin/general/addMailingList",
+				"method": "POST",
+				"timeout": 0,
+				"headers": {
+					"Authorization": "authToken",
+					"Content-Type": "application/json",
+					'Accept': 'application/json'
+					// "accesstoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMwLCJ1c2VyTmFtZSI6ImN1c3RvbWVyMDUwIiwiZW1haWwiOiJjdXN0b21lcjA1MEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjI5NjM0ODMyNjciLCJ1c2VyVHlwZSI6MSwidG9rZW5UeXBlIjoiVXNlciIsImlhdCI6MTY1MDg4MjA3MX0.0Q-FJWeev_7KTq7xoKVqkU_V78AS_vUym36_zOv_YVI"
+				},
+				"data": JSON.stringify({
+					"email": `${mobileNumber}`,
+					"descriptionData": {
+					"category": `${selectedCategoryString}`,
+					"name": `${name}`,
+					"district": `${district}`,
+					"city": `${city}` 
+					}
+				}),
+				};
+	
+				$.ajax(settings).done(function (response) {
+					console.log(response);
+				});
+			}
+			// var data = {
+			// 	"email": `${mobileNumber}`,
+			// 	"descriptionData": {
+			// 	"category": `${selectedCategoryString}`,
+			// 	"name": `${name}`,
+			// 	"district": `${district}`,
+			// 	"city": `${city}` 
+			// 	}
+			// }
+
+			// console.log("data: ", data);
+		}
+		
+		
+		function get_action(form) 
+			{
+				var v = grecaptcha.getResponse();
+				if(v.length == 0)
+				{
+					document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
+					return false;
+				}
+				else
+				{
+					document.getElementById('captcha').innerHTML="Captcha completed";
+					document.getElementById('submit-btn').style.display = 'block';
+					return true; 
+				}
+			}
+
 
 	</script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 	
 &gt;
