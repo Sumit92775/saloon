@@ -295,6 +295,26 @@
 			justify-content: space-evenly;
 			align-items: center;
 		}
+
+        .grid-item-container-a {
+            width: 100% !important;
+        }
+
+        .grid-item-container-b {
+            width: 100% !important;
+        }
+
+        #captcha-container {
+            flex-direction: column;
+        }
+
+        .g-recaptcha {
+            width: 200px;
+            display: flex;
+            justify-content: end;
+            width: 100%;
+        }
+
 	}
 	 #form-container {
 		width: 100%;
@@ -416,7 +436,7 @@
 				اختر الفئة الممثلة لعلاقة شخصكم الكريم المستقبلية معنا من الخيارات أدناه لتطلِع على مستجداتنا اولاً بأول. 
 				</div>			    				
 			<div id="form-container">
-				<form id="form" onsubmit="formSubmit()">
+				<form id="form">
 					<div id="grid-container">
 						<div class="grid-item-container-a mx-1">
 							<label>الفئة <span class="required">*</span></label>
@@ -450,7 +470,7 @@
 								<input name="district" required type="text" placeholder="الحي"></input>
 							</div>
 							
-							<div class="grid-item-container- mx-1">
+							<div class="grid-item-container-b mx-1">
 								<label>المدينة <span class="required">*</span></label>
 								<input name="city" required type="text"placeholder="المدينة"></input>
 							</div>
@@ -461,20 +481,21 @@
 							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAALTAF9BYXlss-XODBVMvvAAibV2-" data-callback="get_action()"></div>
 							<br/>
                             <span id="captcha"></span>
-                            <div class="btn-container">
-                                <button type="submit" id="submit-btn" value="Submit">ارسال</button>
-                            </div>
-						</form>
-					</div>
-						<!-- <button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button> -->
+                            <input type="submit" id="submit-btn" value="ارسال"></button>
+                        </form>
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button>
+                    </div>
 				</form>
 			</div>
 
 					    						    			    								    			    			    				
 			<div id="cspio-socialprofiles">
-				<a href="https://saloonplus.com/" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>			
-				<a href="https://saloonplus.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>			
-				<a href="mailto:" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+				<!-- <a href="https://saloonplus.com/" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>			 -->
+				<a href="https://twitter.com/SaloonPlus?t=i8sGxT9c9KlT2OdrHicdWQ&s=09" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>			
+				<a href="https://www.instagram.com/p/CcyFDDWO1nC/?igshid=MDJmNzVkMjY=" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>			
+				<a href="mailto:support@saloonplus.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
 			</div>
 
 			<div id="cspio-credit-a">
@@ -540,14 +561,14 @@
 		}
 
 
-		function formSubmit(data) {
+		function formSubmit() {
 			let name = document.querySelector('[name="name"]').value; // district input field
 			let district = document.querySelector('[name="district"]').value; // district input field
 			let city = document.querySelector('[name="city"]').value; // city input field
 			let mobileNumber = ''+document.querySelector('[name="mobileNumber"]').value; // mobileNumber input field
 			
 			console.log("district: ", district, city, mobileNumber, name, selectedCategoryString);
-			console.log("data: ", category);
+			// console.log("data: ", category);
 
 			if (name.length > 0 && district.length > 0 && city.length > 0 && mobileNumber.length > 0) {
 				var settings = {
@@ -618,7 +639,7 @@
 			// }
 
 			// console.log("data: ", data);
-		}
+		
 		
 		
 		function get_action(form) 
@@ -633,6 +654,7 @@
 				{
 					document.getElementById('captcha').innerHTML="Captcha completed";
 					document.getElementById('submit-btn').style.display = 'block';
+                    formSubmit();
 					return true; 
 				}
 			}
