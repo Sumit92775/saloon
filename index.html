@@ -446,7 +446,7 @@
 			</div>
 
 			<div id="form-container">
-				<form id="form">
+				<form id="form" onsubmit="formSubmit()">
 					<div id="grid-container">
                         <div class="grid-item-container-a mx-1">
                             <label id="label-name">الإسم <span class="required">*</span></label>
@@ -489,14 +489,15 @@
 					</div>
 					<div id="captcha-container">
 						<form action="?" method="POST">
+							<span class="required">*</span>
 							<div class="g-recaptcha" data-sitekey="6Lesl6AfAAAAALTAF9BYXlss-XODBVMvvAAibV2-" data-callback="correctCaptcha"></div>
 							<br/>
                             <span id="captcha"></span>
-                            <input type="submit" id="submit-btn" value="ارسال"></input>
+                            <!-- <input type="submit" id="submit-btn" value="ارسال"></input> -->
                         </form>
                     </div>
                     <div class="btn-container">
-                        <button type="submit" id="submit-btn" value="Submit" style="display: none;">Submit</button>
+                        <button type="submit" id="submit-btn" value="Submit" style="display: none;">ارسال</button>
                     </div>
 				</form>
 			</div>
@@ -552,6 +553,7 @@
 		console.log("data", data);
 
 		var selectedCategoryString = 'customer'
+		var captchaVerified = false
 
 		function categorySelect(data){
 			let selectedCategory = data.target.selectedIndex
@@ -573,6 +575,9 @@
 		}
 
         function formSubmit() {
+
+			if (captchaVerified) {
+
 			let name = document.querySelector('[name="name"]').value; // district input field
 			let district = document.querySelector('[name="district"]').value; // district input field
 			let city = document.querySelector('[name="city"]').value; // city input field
@@ -627,32 +632,35 @@
                     }
 					// console.log(response);
 				});
-			} else {
-                Toastify({
-                        text: 'نرجوا تعبأة هذه الخانات',
-                        duration: 3000,
-                        style: {
-                                background: 'red',
-                                width: '300px'
-                            },
-                        position: 'right'
-                        }).showToast();
-                    }
-            }
+			}
+            }  else {
+				Toastify({
+					text: 'Please verify the captcha',
+					position: 'right',
+					duration: 3000,
+					style: {
+							background: 'green',
+							width: '300px'
+						}
+					}).showToast();
+			}
+		}
 
 
         var correctCaptcha = function(form) {
             var v = grecaptcha.getResponse();
             if(v.length == 0)
             {
-                document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
+				captchaVerified = false
+                // document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
                 return false;
             }
             else
             {
-                document.getElementById('captcha').innerHTML="Captcha completed";
+                // document.getElementById('captcha').innerHTML="Captcha completed";
                 // document.getElementById('submit-btn').style.display = 'block';
-                formSubmit();
+                // formSubmit();
+				captchaVerified = true
                 return true; 
             }
         }
